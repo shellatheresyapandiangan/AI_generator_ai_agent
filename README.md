@@ -1,216 +1,110 @@
-# AI Code Assistant
+# Profiler Module
 
-A sophisticated Streamlit-based application that delivers AI-powered code assistance, performance profiling, and security scanning. By leveraging multiple language models and advanced vector search capabilities, the system provides seamless and context-aware support for various code-related tasks.
-
----
+The Profiler module is a comprehensive system designed for profiling and optimizing Python code. It provides real-time performance monitoring, dependency management, and detailed reporting, leveraging AI for optimization suggestions.
 
 ## Features
 
-### Core Capabilities
-- **Multi-Model AI Processing**
-  - Supports Mistral (Ollama), CodeLlama (Ollama), LLaMA 3 (Groq), and GPT-4 (optional OpenAI integration).
+- **Code Execution and Profiling**: Safely execute Python code with isolation and gather performance metrics.
+- **Dependency Management**: Detect, validate, and manage Python package dependencies.
+- **Real-Time Profiling**: Monitor execution time, memory usage, and CPU utilization.
+- **AI-Powered Optimization**: Generate actionable optimization suggestions using AI.
+- **Report Generation**: Create detailed reports in multiple formats (JSON, Markdown, PDF).
+- **Sandboxed Execution**: Execute code in a controlled environment to ensure safety.
+- **Error Handling**: Comprehensive error reporting and handling.
+- **Profiler**: Integrate with PerformanceMetricsCollector for comprehensive profiling and metric gathering.
 
-- **Vector-Based Document Management**
-  - Persistent index storage and real-time updates.
-  - Context-aware querying for efficient document retrieval.
+## Components
 
-- **Task Processing**
-  - Production code generation.
-  - Comprehensive code review and analysis.
-  - Automated documentation and test case creation.
-  - Contextual and intelligent querying.
+### 1. Code Execution Wrapper
+- **File**: `models/profiler/code_execution_wrapper.py`
+- **Purpose**: Executes Python code with isolation and integrates with `PerformanceMetricsCollector` for profiling.
+- **Key Methods**:
+  - `validate_code`: Validates code for syntax and security.
+  - `execute_with_report`: Executes code and returns execution results with metrics.
 
-- **Profiler**
-  - Real-time performance monitoring and optimization suggestions.
-  - Dependency management and detailed reporting.
-  - AI-powered optimization for Python code.
-  - Supports both synchronous and asynchronous code execution.
+### 2. Dependency Manager
+- **File**: `models/profiler/dependency_manager.py`
+- **Purpose**: Manages Python package dependencies, including detection and installation.
+- **Key Methods**:
+  - `check_dependencies`: Checks for missing or outdated packages.
+  - `install_dependencies`: Installs required packages.
 
-### Security Scanner
-- **Advanced Code Security Scanning**
-  - Quick, deep, and custom scan options.
-  - Extensive vulnerability detection.
-  - Git repository scanning with authentication support.
-  - Detailed reports with severity-based filtering.
-  - Export results in JSON or PDF formats.
+### 3. Real-Time Profiler
+- **File**: `models/profiler/fallback/real_time_profiler.py`
+- **Purpose**: Profiles code execution in real-time and provides optimization recommendations.
+- **Key Methods**:
+  - `profile_code_files`: Profiles multiple Python files.
+  - `get_optimization_recommendations`: Generates optimization suggestions.
 
-### Technical Implementation
-- Streamlit-based intuitive user interface.
-- Hugging Face embedding model for vector search.
-- Persistent vector store indexing for document management.
-- Multi-model task routing system for optimized performance.
-- Integrated Profiler for performance monitoring and optimization.
+### 4. Performance Metrics Collector
+- **File**: `models/profiler/performance_metrics.py`
+- **Purpose**: Collects and manages system performance metrics.
+- **Key Methods**:
+  - `profile_execution`: Decorator for line-by-line execution profiling.
+  - `get_metrics`: Retrieves collected metrics.
 
----
+### 5. Report Generator
+- **File**: `models/profiler/report_generator.py`
+- **Purpose**: Generates comprehensive profiling reports using LLM-enhanced analysis.
+- **Key Methods**:
+  - `generate_report`: Creates reports in JSON, Markdown, and PDF formats.
 
-## Installation
-
-### Prerequisites
-- Python 3.8+
-- Installed dependencies for Ollama and Groq APIs.
-- Optional: OpenAI API access for GPT-4.
-
-### Setup
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/AKKI0511/AI-Code-Generator.git
-   cd AI-Code-Generator
-   ```
-
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Configure environment variables:
-   ```env
-   GROQ_API_KEY=your_groq_api_key
-   OPENAI_API_KEY=your_openai_api_key  # Optional
-   ```
-
-4. Launch the application:
-   ```bash
-   streamlit run main.py
-   ```
-
----
-
-## Architecture
-
-### Directory Structure
-```
-project/
-├── main.py                 # Application entry point
-├── app.py                  # Core application logic
-├── constants.py            # System constants
-├── requirements.txt        # Dependencies
-├── components/             # UI components
-├── models/                 # AI models and core logic
-├── services/               # Business logic
-└── utils/                  # Utility functions
-```
-
-### Component Overview
-- **`main.py`**: Initializes and configures the application.
-- **`app.py`**: Manages the Streamlit interface and user interaction.
-- **`code_assistant.py`**: Core AI processing and task orchestration.
-- **`task_service.py`**: Task-specific business logic.
-- **`session_state.py`**: Manages application states across sessions.
-
----
-
-## Functional Specifications
-
-### Code Generation
-- **Input**: Natural language description.
-- **Output**: Production-ready Python code.
-- **Features**:
-  - Implements error handling and type hints.
-  - Ensures PEP compliance and performance optimization.
-  - Auto-generates documentation.
-
-### Code Review
-- **Capabilities**:
-  - Evaluates code quality and identifies bugs.
-  - Analyzes performance and security.
-  - Provides optimization recommendations.
-
-### Profiler
-- **Capabilities**:
-  - Monitors execution time, memory usage, and CPU utilization.
-  - Provides AI-powered optimization suggestions.
-  - Generates detailed performance reports.
-  - Supports both synchronous and asynchronous code execution.
-
-### Documentation Generation
-- **Output Components**:
-  - System overviews, implementation details, API documentation, and usage examples.
-  - Parameter specifications with clear formatting.
-
-### Test Case Creation
-- **Features**:
-  - Generates test cases using Pytest framework.
-  - Covers edge cases, error scenarios, and assertions.
-  - Includes test documentation.
-
-### Query Processing
-- **Highlights**:
-  - Provides context-aware responses with source citation.
-  - Aids code comprehension and implementation guidance.
-  - Recommends best practices.
-
----
-
-## Security Scanner
-
-### Scan Options
-- **Quick Scan**: Performs basic security checks.
-- **Deep Scan**: Executes comprehensive analysis.
-- **Custom Scan**: Allows user-defined checks.
-
-### Input Methods
-- Upload code files or input code snippets directly.
-- Scan Git repositories with authentication.
-
-### Output
-- Generates detailed vulnerability reports.
-- Supports export options in JSON and PDF formats.
-- Tracks historical data for trend analysis.
-
----
+### 6. File Handler
+- **File**: `models/profiler/file_handler.py`
+- **Purpose**: Manages file operations, including saving and cleaning up temporary files.
+- **Key Methods**:
+  - `save_files_locally`: Saves files to a local directory.
+  - `cleanup_files`: Cleans up temporary files and directories.
 
 ## Configuration
 
-### Environment Variables
+- **File**: `models/profiler/config.py`
+- **Purpose**: Defines configuration settings for execution, profiling, dependencies, and reporting.
+- **Key Classes**:
+  - `ExecutionConfig`: Settings for code execution.
+  - `DependencyConfig`: Settings for dependency management.
+  - `ReportConfig`: Settings for report generation.
+
+## Usage
+
+### Basic Example
+
+```python
+from models.profiler.profiler_handler import ProfileHandler
+
+async def main():
+    profiler = ProfileHandler()
+    code = """
+    def factorial(n):
+        return 1 if n <= 1 else n * factorial(n-1)
+    result = factorial(10)
+    print(f"Factorial of 10 is {result}")
+    """
+    result = await profiler.run_code_with_report(code)
+    print(result)
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())
 ```
-GROQ_API_KEY          # Required for LLaMA 3 integration
-OPENAI_API_KEY        # Optional for GPT-4
-LLAMA_CLOUD_API_KEY   # Optional for cloud-based services
-```
 
-### Model Configuration
-- **Embedding Model**: BAAI/bge-small-en-v1.5.
-- **Vector Store**: LlamaIndex for efficient indexing.
-- **Node Parser**: Configured with SentenceSplitter for optimal parsing.
+### Running Tests
 
----
+- **File**: `models/profiler/tests/test_profiler.py`
+- **Purpose**: Contains test cases to validate the functionality of the profiler module.
+- **Command**: Run tests using `python models/profiler/tests/test_profiler.py`.
 
-## Usage Instructions
+## Logging
 
-### Task Selection
-1. Choose the desired task from the available options.
-2. Input the task-specific details or requirements.
-3. Review and refine the generated output.
-4. Access saved outputs from the designated directory.
+- Configured across modules to provide detailed execution logs.
+- Log format: `%(asctime)s - %(name)s - %(levelname)s - %(message)s`
 
-### Document Management
-1. Upload documents via the user interface.
-2. Allow the system to index content automatically.
-3. Query the indexed content using natural language.
-4. Refresh indexes as needed to include new data.
+## Contributing
 
----
-
-## Development Guidelines
-
-### Extensibility
-- Integrate additional models through a modular interface.
-- Add new task types with minimal disruption to existing architecture.
-- Enhance UI components for improved usability.
-
-### Best Practices
-- Adhere to PEP standards for code quality.
-- Implement robust error handling mechanisms.
-- Use type hints for better readability and debugging.
-- Document all new features and include unit tests.
-
----
-
-## Contributions
-Contributions are welcome! Please submit pull requests or open issues to improve the project.
-
----
+Contributions are welcome! Please ensure that your code adheres to the existing style and passes all tests.
 
 ## License
-This project is licensed under the MIT License. See `LICENSE` for details.
+
+This project is licensed under the MIT License.
+
+For more information, visit the [GitHub repository](https://github.com/AKKI0511/AI-Code-Generator).
